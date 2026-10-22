@@ -193,6 +193,8 @@ document.querySelectorAll('[data-scene]').forEach((sec) => {
     activeScene = SCENES[sec.dataset.scene] || SCENES.hero;
     glowTarget = activeScene.glow;
     traceTarget = activeScene.traces;
+    document.body.dataset.scene = sec.dataset.scene;
+    window.__scene = sec.dataset.scene;
     const p = (window.innerWidth <= 768) ? activeScene.posM : activeScene.pos;
     groupTarget.x = p.x; groupTarget.y = p.y; groupTarget.s = p.s;
   };
