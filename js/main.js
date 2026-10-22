@@ -82,37 +82,39 @@ const glowTex = makeGlowTexture();
 const goldMat = new THREE.MeshStandardMaterial({
   color: 0xd4a437, metalness: 0.85, roughness: 0.3,
   emissive: 0x8a6d1f, emissiveIntensity: 0.55,
+  transparent: true, opacity: 1,
 });
+let traceTarget = 1;
 const padMat = new THREE.MeshStandardMaterial({
   color: 0xf0c75e, metalness: 0.7, roughness: 0.25,
   emissive: 0xd4a437, emissiveIntensity: 0.9,
 });
 
-/* ---------- the Circuit A geometry ---------- */
-const A = { apex: [0, 1.05], footL: [-0.92, -0.95], footR: [0.92, -0.95] };
-const legPoint = (from, to, t) => [from[0] + (to[0] - from[0]) * t, from[1] + (to[1] - from[1]) * t];
-const crossL = legPoint(A.apex, A.footL, 0.62);
-const crossR = legPoint(A.apex, A.footR, 0.62);
-const stubL1 = legPoint(A.apex, A.footL, 0.32), stubR1 = legPoint(A.apex, A.footR, 0.32);
-const stubL2 = legPoint(A.apex, A.footL, 0.85), stubR2 = legPoint(A.apex, A.footR, 0.85);
-const STUB = 0.34;
-
+/* ---------- the Circuit A v3 geometry (exact coords from the master SVG) ---------- */
+const heroLayoutPts = [
+  { p: [0.0, 0.9], r: 0.085 },          // apex
+  { p: [-0.716, -0.889], r: 0.085 },    // foot L
+  { p: [0.716, -0.889], r: 0.085 },     // foot R
+  { p: [-0.411, -0.126], r: 0.06 },     // crossbar L
+  { p: [0.411, -0.126], r: 0.06 },      // crossbar R
+  { p: [-0.587, 0.313], r: 0.06, pad: true },  // stub pad L1
+  { p: [0.587, 0.313], r: 0.06, pad: true },   // stub pad R1
+  { p: [-0.808, -0.566], r: 0.06, pad: true }, // stub pad L2
+  { p: [0.808, -0.566], r: 0.06, pad: true },  // stub pad R2
+];
 const edges = [
-  [A.apex, A.footL], [A.apex, A.footR], [crossL, crossR],
-  [stubL1, [stubL1[0] - STUB, stubL1[1]]],
-  [stubR1, [stubR1[0] + STUB, stubR1[1]]],
-  [stubL2, [stubL2[0] - STUB, stubL2[1]]],
-  [stubR2, [stubR2[0] + STUB, stubR2[1]]],
+  [[-0.679, -0.797], [-0.037, 0.808]],   // leg L
+  [[0.679, -0.797], [0.037, 0.808]],     // leg R
+  [[-0.321, -0.126], [0.321, -0.126]],   // crossbar
+  [[-0.284, 0.189], [-0.463, 0.189]],    // stub L1
+  [[-0.463, 0.189], [-0.526, 0.253]],
+  [[0.284, 0.189], [0.463, 0.189]],      // stub R1
+  [[0.463, 0.189], [0.526, 0.253]],
+  [[-0.537, -0.442], [-0.684, -0.442]],  // stub L2
+  [[-0.684, -0.442], [-0.747, -0.505]],
+  [[0.537, -0.442], [0.684, -0.442]],    // stub R2
+  [[0.684, -0.442], [0.747, -0.505]],
 ];
-const nodePoints = [
-  { p: A.apex, r: 0.09 }, { p: A.footL, r: 0.09 }, { p: A.footR, r: 0.09 },
-  { p: crossL, r: 0.055 }, { p: crossR, r: 0.055 },
-  { p: [stubL1[0] - STUB, stubL1[1]], r: 0.055, pad: true },
-  { p: [stubR1[0] + STUB, stubR1[1]], r: 0.055, pad: true },
-  { p: [stubL2[0] - STUB, stubL2[1]], r: 0.055, pad: true },
-  { p: [stubR2[0] + STUB, stubR2[1]], r: 0.055, pad: true },
-];
-
 const symbol = new THREE.Group();
 scene.add(symbol);
 
@@ -129,7 +131,7 @@ edges.forEach(([a, b]) => {
 });
 
 const nodes = [];
-nodePoints.forEach(({ p, r, pad }, i) => {
+heroLayoutPts.forEach(({ p, r, pad }, i) => {
   const holder = new THREE.Group();
   const core = new THREE.Mesh(
     pad ? new THREE.BoxGeometry(r * 1.5, r * 1.5, r * 1.5) : new THREE.SphereGeometry(r, 24, 24),
@@ -144,7 +146,7 @@ nodePoints.forEach(({ p, r, pad }, i) => {
   glow.scale.setScalar(r * 9);
   holder.add(glow);
   holder.userData = {
-    phase: (i / nodePoints.length) * Math.PI * 2,
+    phase: (i / heroLayoutPts.length) * Math.PI * 2,
     explodeDir: new THREE.Vector3(p[0], p[1], 0).normalize(),
     core, glow,
   };
@@ -155,9 +157,9 @@ nodePoints.forEach(({ p, r, pad }, i) => {
 });
 
 /* ---------- SECTION SCENES: layouts the nodes morph between ---------- */
-const heroLayout = nodePoints.map(({ p }) => new THREE.Vector3(p[0], p[1], 0));
-const chaosLayout = nodePoints.map((_, i) => {
-  const a = (i / nodePoints.length) * Math.PI * 2 + 0.7;
+const heroLayout = heroLayoutPts.map(({ p }) => new THREE.Vector3(p[0], p[1], 0));
+const chaosLayout = heroLayoutPts.map((_, i) => {
+  const a = (i / heroLayoutPts.length) * Math.PI * 2 + 0.7;
   const rad = 1.5 + (i % 3) * 0.55;
   return new THREE.Vector3(Math.cos(a) * rad, Math.sin(a) * rad * 0.8, ((i % 5) - 2) * 0.4);
 });
@@ -176,11 +178,11 @@ for (let i = 1; i < 9; i++) {
 }
 
 const SCENES = {
-  hero:         { layout: heroLayout, glow: 1.0,  spin: 1.0, pos: { x: 2.1, y: -0.15, s: 1.3 }, posM: { x: 0, y: 1.5, s: 0.85 } },
-  chaos:        { layout: chaosLayout, glow: 0.45, spin: 0.4, pos: { x: 2.6, y: 0, s: 1.05 }, posM: { x: 0, y: 1.2, s: 0.7 } },
-  clusters:     { layout: clustersLayout, glow: 0.9, spin: 0.7, pos: { x: 2.5, y: 0, s: 1.1 }, posM: { x: 0, y: 1.3, s: 0.75 } },
-  ring:         { layout: ringLayout, glow: 0.85, spin: 0.9, pos: { x: 2.6, y: 0, s: 1.0 }, posM: { x: 0, y: 1.3, s: 0.7 } },
-  'hero-reform': { layout: heroLayout, glow: 1.0, spin: 1.0, pos: { x: -2.2, y: 0, s: 1.1 }, posM: { x: 0, y: 1.6, s: 0.7 } },
+  hero:         { layout: heroLayout, glow: 1.0, traces: 1.0, spin: 1.0, pos: { x: 2.1, y: -0.15, s: 1.3 }, posM: { x: 0, y: 1.5, s: 0.85 } },
+  chaos:        { layout: chaosLayout, glow: 0.45, traces: 0.05, spin: 0.4, pos: { x: 2.6, y: 0, s: 1.05 }, posM: { x: 0, y: 1.2, s: 0.7 } },
+  clusters:     { layout: clustersLayout, glow: 0.9, traces: 0.05, spin: 0.7, pos: { x: 2.5, y: 0, s: 1.1 }, posM: { x: 0, y: 1.3, s: 0.75 } },
+  ring:         { layout: ringLayout, glow: 0.85, traces: 0.05, spin: 0.9, pos: { x: 2.6, y: 0, s: 1.0 }, posM: { x: 0, y: 1.3, s: 0.7 } },
+  'hero-reform': { layout: heroLayout, glow: 1.0, traces: 1.0, spin: 1.0, pos: { x: -2.2, y: 0, s: 1.1 }, posM: { x: 0, y: 1.6, s: 0.7 } },
 };
 let activeScene = SCENES.hero;
 let glowFactor = 1, glowTarget = 1;
@@ -190,6 +192,7 @@ document.querySelectorAll('[data-scene]').forEach((sec) => {
   const apply = () => {
     activeScene = SCENES[sec.dataset.scene] || SCENES.hero;
     glowTarget = activeScene.glow;
+    traceTarget = activeScene.traces;
     const p = (window.innerWidth <= 768) ? activeScene.posM : activeScene.pos;
     groupTarget.x = p.x; groupTarget.y = p.y; groupTarget.s = p.s;
   };
@@ -268,6 +271,7 @@ function tick() {
   const t = clock.getElapsedTime();
   if (st.pageVisible) {
     glowFactor += (glowTarget - glowFactor) * 0.05;
+    goldMat.opacity += (traceTarget - goldMat.opacity) * 0.06;
 
     const speed = (prefersReduced ? 0.0012 : 0.0035) * activeScene.spin;
     st.rotY += speed;
