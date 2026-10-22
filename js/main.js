@@ -54,6 +54,13 @@ rimLight.position.set(-5, -3, 4);
 scene.add(rimLight);
 
 const symbol = new THREE.Group();
+function layoutSymbol() {
+  const mobile = window.innerWidth <= 768;
+  symbol.scale.setScalar(mobile ? 0.85 : 1.3);
+  symbol.position.x = mobile ? 0 : 2.1;
+  symbol.position.y = mobile ? 1.5 : -0.15;
+}
+layoutSymbol();
 scene.add(symbol);
 
 /* --- gold glow sprite texture (procedural, no external asset) --- */
@@ -287,6 +294,7 @@ window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  layoutSymbol();
 });
 
 /* ---------------------------------------------------------
