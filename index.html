@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Avenshift — One Human. A Full Company of AI Agents.</title>
+<meta name="description" content="Avenshift builds companies run by AI agents. One human boss. A full IT team of agents underneath: dev, DevOps, QA, security, data, support, PM and CTO-level planning. Working 24/7 on your instruction." />
+<meta property="og:title" content="Avenshift — One Human. A Full Company of AI Agents." />
+<meta property="og:description" content="You give one instruction. Your agent team plans, builds, tests and ships. 24/7." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/avenshift_circuit_full.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
+<link rel="stylesheet" href="css/styles.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- Film grain overlay -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Custom cursor (desktop only) -->
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<!-- Navigation -->
+<header class="nav" id="nav">
+  <a class="nav-brand" href="#top" data-cursor="link">
+    <img src="assets/avenshift_circuit_icon.png" alt="Avenshift logo" class="nav-logo" />
+    <span class="nav-word">AVENSHIFT</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#team" data-cursor="link">The Team</a>
+    <a href="#how" data-cursor="link">How It Works</a>
+    <a href="#proof" data-cursor="link">Live Proof</a>
+    <a href="#contact" class="nav-cta" data-cursor="link">Become the Boss</a>
+  </nav>
+  <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#team">The Team</a>
+  <a href="#how">How It Works</a>
+  <a href="#proof">Live Proof</a>
+  <a href="#contact">Become the Boss</a>
+</div>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal-line"><span class="mono">EST. 2026 &mdash; PUNE, INDIA</span></p>
+      <h1 class="hero-title" id="heroTitle">
+        <span class="line"><span data-split>ONE HUMAN.</span></span>
+        <span class="line"><span data-split>A FULL COMPANY</span></span>
+        <span class="line gold"><span data-split>OF AI AGENTS.</span></span>
+      </h1>
+      <p class="hero-sub reveal-line">You give one instruction. Your agent team plans, builds, tests and ships &mdash; while you sleep. Dev, DevOps, QA, security, data, support, PM, CTO-level planning. All agents. One boss: you.</p>
+      <div class="hero-ctas reveal-line">
+        <a class="btn btn-gold" href="https://t.me/JerryBySagarBot" target="_blank" rel="noopener" data-cursor="link">Meet Jerry, the first agent</a>
+        <a class="btn btn-ghost" href="#team" data-cursor="link">See the org chart</a>
+      </div>
+    </div>
+    <div class="hero-scrollhint mono" aria-hidden="true">
+      <span>SCROLL</span>
+      <span class="scroll-line"></span>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack">
+      <span>PLAN</span><i>&#9670;</i><span>BUILD</span><i>&#9670;</i><span>TEST</span><i>&#9670;</i><span>SHIP</span><i>&#9670;</i><span>SECURE</span><i>&#9670;</i><span>SUPPORT</span><i>&#9670;</i><span>24/7</span><i>&#9670;</i>
+      <span>PLAN</span><i>&#9670;</i><span>BUILD</span><i>&#9670;</i><span>TEST</span><i>&#9670;</i><span>SHIP</span><i>&#9670;</i><span>SECURE</span><i>&#9670;</i><span>SUPPORT</span><i>&#9670;</i><span>24/7</span><i>&#9670;</i>
+    </div>
+  </div>
+
+  <!-- ============ THE IDEA ============ -->
+  <section class="section idea" id="idea">
+    <p class="section-label mono reveal">THE IDEA</p>
+    <h2 class="section-title" data-split-words>A company with one employee. You.</h2>
+    <p class="section-body reveal">Every company is a team: someone plans, someone codes, someone tests, someone answers customers. Avenshift replaces the payroll with a team of AI agents that never sleeps, never forgets and costs almost nothing to run. The human stays the boss &mdash; every rupee, every message, every delete waits for your yes.</p>
+    <div class="idea-stats">
+      <div class="stat reveal"><span class="stat-num" data-count="9">0</span><span class="stat-label">agent roles on the team</span></div>
+      <div class="stat reveal"><span class="stat-num" data-count="24">0</span><span class="stat-label">hours a day they work</span></div>
+      <div class="stat reveal"><span class="stat-num" data-count="1">0</span><span class="stat-label">human boss required</span></div>
+    </div>
+  </section>
+
+  <!-- ============ ORG CHART / TEAM ============ -->
+  <section class="section team" id="team">
+    <p class="section-label mono reveal">THE ORG CHART</p>
+    <h2 class="section-title" data-split-words>Your agent team, reporting to you.</h2>
+
+    <div class="org">
+      <div class="org-boss reveal">
+        <div class="org-card boss-card" data-cursor="link">
+          <span class="org-role mono">BOSS</span>
+          <span class="org-name">You</span>
+          <span class="org-desc">Sets the goal. Approves money, messages and deletes. Nothing else is required.</span>
+        </div>
+      </div>
+      <div class="org-connector" aria-hidden="true"><span class="org-line"></span></div>
+      <div class="org-grid">
+        <div class="org-card reveal" data-cursor="link"><span class="org-role mono">CTO / PLANNER</span><span class="org-name">Chief</span><span class="org-desc">Breaks one instruction into a plan, assigns work to the team, reviews quality.</span></div>
+        <div class="org-card reveal" data-cursor="link"><span class="org-role mono">DEVELOPER</span><span class="org-name">Dev</span><span class="org-desc">Writes code, sites, tools and decks. Ships working software, not slides.</span></div>
+        <div class="org-card reveal" data-cursor="link"><span class="org-role mono">DEVOPS</span><span class="org-name">Ops</span><span class="org-desc">Hosting, deployments, uptime. Keeps everything running on a free stack.</span></div>
+        <div class="org-card reveal" data-cursor="link"><span class="org-role mono">QA</span><span class="org-name">Check</span><span class="org-desc">Tests every build on desktop and mobile before it reaches you.</span></div>
+        <div class="org-card reveal" data-cursor="link"><span class="org-role mono">SECURITY</span><span class="org-name">Guard</span><span class="org-desc">Watches for scams and injection attacks. Keeps secrets in the vault.</span></div>
+        <div class="org-card reveal" data-cursor="link"><span class="org-role mono">DATA</span><span class="org-name">Lens</span><span class="org-desc">Researches, compares, verifies facts against live sources.</span></div>
+        <div class="org-card reveal" data-cursor="link"><span class="org-role mono">SUPPORT</span><span class="org-name">Echo</span><span class="org-desc">Answers customers in their language &mdash; Hindi, Marathi, English.</span></div>
+        <div class="org-card reveal" data-cursor="link"><span class="org-role mono">PM</span><span class="org-name">Track</span><span class="org-desc">Remembers every task, chases every follow-up, reports progress.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section how" id="how">
+    <p class="section-label mono reveal">HOW IT WORKS</p>
+    <h2 class="section-title" data-split-words>One instruction in. Finished work out.</h2>
+    <div class="steps">
+      <div class="step reveal" data-cursor="link">
+        <span class="step-num mono">01</span>
+        <h3>You give one instruction</h3>
+        <p>Plain words, on WhatsApp or Telegram. "Build me a website." "Apply to these jobs." "Research this market." That is the whole job description.</p>
+      </div>
+      <div class="step reveal" data-cursor="link">
+        <span class="step-num mono">02</span>
+        <h3>The team plans and splits the work</h3>
+        <p>The planner agent breaks it into tasks and hands them to specialist agents &mdash; research, build, QA &mdash; running in parallel, day and night.</p>
+      </div>
+      <div class="step reveal" data-cursor="link">
+        <span class="step-num mono">03</span>
+        <h3>Work is verified, then delivered</h3>
+        <p>Every claim is checked against live sources. Every visual is screenshot-tested. You get the finished result with the receipts.</p>
+      </div>
+      <div class="step reveal" data-cursor="link">
+        <span class="step-num mono">04</span>
+        <h3>You approve the irreversible</h3>
+        <p>Money, messages sent as you, deletions &mdash; the team drafts and waits for your yes. Everything else just gets done.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIVE PROOF ============ -->
+  <section class="section proof" id="proof">
+    <p class="section-label mono reveal">LIVE PROOF</p>
+    <h2 class="section-title" data-split-words>This team already ships.</h2>
+    <div class="proof-grid">
+      <a class="proof-card reveal" href="https://t.me/JerryBySagarBot" target="_blank" rel="noopener" data-cursor="link">
+        <span class="proof-tag mono">LIVE &mdash; TELEGRAM</span>
+        <h3>Jerry</h3>
+        <p>The first Avenshift agent. A personal agent that chats in Hinglish, remembers context and works on one instruction. Message it now.</p>
+        <span class="proof-link">Open Jerry &rarr;</span>
+      </a>
+      <a class="proof-card reveal" href="https://sagaranwekar.github.io/avenshift-site/vaani/" target="_blank" rel="noopener" data-cursor="link">
+        <span class="proof-tag mono">LIVE &mdash; WEB</span>
+        <h3>Vaani BI</h3>
+        <p>A voice assistant for Indian shop owners. Speak a sale in Hindi, Marathi or Hinglish &mdash; get totals, splits and a spoken reply.</p>
+        <span class="proof-link">Try the voice demo &rarr;</span>
+      </a>
+      <div class="proof-card soon reveal">
+        <span class="proof-tag mono">IN DEVELOPMENT</span>
+        <h3>Avenshift Crew</h3>
+        <p>The full org chart as a product: a cloud agent team on its own site, working 24/7 on your rules, with tickets in and finished work out.</p>
+        <span class="proof-link">Coming soon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRINCIPLES ============ -->
+  <section class="section principles" id="principles">
+    <p class="section-label mono reveal">HOUSE RULES</p>
+    <div class="principles-grid">
+      <div class="principle reveal"><h3>Free and open stack</h3><p>Built on open-source and free tiers. No burn, no lock-in, no surprise bills.</p></div>
+      <div class="principle reveal"><h3>The boss approves</h3><p>Agents never spend money, send messages as you, or delete anything without your explicit yes.</p></div>
+      <div class="principle reveal"><h3>Original work only</h3><p>We learn techniques from the best sites in the world. We never copy their code, assets or brand.</p></div>
+      <div class="principle reveal"><h3>Made in India</h3><p>Built in Pune, for Indian businesses first &mdash; Hinglish included, no translation needed.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ CTA / FOOTER ============ -->
+  <footer class="footer" id="contact">
+    <div class="footer-inner">
+      <img src="assets/avenshift_circuit_full.png" alt="Avenshift — Autonomous Agents" class="footer-logo reveal" />
+      <h2 class="footer-title" data-split-words>Ready to be the boss?</h2>
+      <p class="footer-sub reveal">Talk to the first agent today, or write to us about what your agent team should do.</p>
+      <div class="footer-ctas reveal">
+        <a class="btn btn-gold" href="https://t.me/JerryBySagarBot" target="_blank" rel="noopener" data-cursor="link">Message Jerry on Telegram</a>
+        <a class="btn btn-ghost" href="mailto:avenshift@proton.me" data-cursor="link">avenshift@proton.me</a>
+      </div>
+      <div class="footer-meta mono">
+        <span>AVENSHIFT &mdash; AUTONOMOUS AGENTS</span>
+        <span>PUNE, INDIA</span>
+        <span>&copy; 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
