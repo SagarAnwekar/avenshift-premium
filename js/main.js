@@ -340,7 +340,7 @@ function splitChars(el) {
   for (const ch of text) {
     const s = document.createElement('span');
     s.className = 'char';
-    s.textContent = ch === ' ' ? ' ' : ch;
+    s.textContent = ch === ' ' ? '\u00A0' : ch;
     frag.appendChild(s);
   }
   el.appendChild(frag);
